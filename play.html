@@ -1,0 +1,342 @@
+<!DOCTYPE html>     
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+   <!--attempt to load graphics first-->
+   <link rel="preload" href="../resources/player.png" as="image">
+   <link rel="preload" href="../resources/intro.png" as="image">
+   <link rel="stylesheet" href="style.css">
+<title>Space Game</title>
+</head>
+
+<body >
+
+<div class="user-select"> 
+<div class="center-margin">
+<div class="body-container">
+<div class="header-grid">
+<div id="playerStats">
+<span class="header-printout">HP:&nbsp;</span><span id="playerHP" class="header-printout"></span>
+&nbsp;
+<span class="header-printout">Credits:&nbsp;</span><span id="playerCredits" class="header-printout"></span>
+</div>
+</div>
+<div class="left-grid">
+   <div id="playerControl" class="interface navbar flipped right-bar rad-scroll">
+   <div class="tiny-guide">
+   <img id="treeControlExpand" class="tiny-control">
+   <img id="treeControlCollapes" class="tiny-control">
+   <img id="jumpControlDown" class="tiny-control">
+   <img id="jumpControlUp" class="tiny-control">
+   <span class="float-right">
+   <img id="minimize" class="tiny-control">
+   <img id="pinControl" class="tiny-control">
+   </span>
+   </div>
+   <button class="accordion">
+   <img id="navbarShip" alt="Ship" class="navbar-img"/>
+   <span class="navbar-text">Ship</span>
+   </button>
+   <div class="panel" style="background:rgba(201, 145, 41, 0.274)">
+   <button class="accordion acc-inner">Systems</button>
+   <div class="panel panel-inner" style="background:rgba(211, 155, 50, 0.274)">
+   <ul class="interface-list">
+   <li><button id="systemsAttachments" class="interface-btn" title="Offensive Power and Primary Tools">Attachments</button></li>
+   <li><button id="systemsDefensive" class="interface-btn" title="Armor, Defectors, Shields">Defensive</button></li>
+   <li><button id="systemsEngineering" class="interface-btn" title="Sub-light and FTL">Engineering</button></li>
+   <li><button id="systemsAuxiliary" class="interface-btn" title="Backup and Augmentations">Auxiliary</button></li>
+   </ul>
+   </div>
+   <button class="accordion acc-inner">Carco</button>
+   <div class="panel panel-inner" style="background:rgba(211, 155, 50, 0.274)">
+      <ul class="interface-list">
+      <li><button id="systemsCarco" class="interface-btn">Load</button></li>
+      <hr>
+      <span id="playerInventoryHotbar">
+         <li><button class="interface-btn">Setup&nbsp;Favorite&nbsp;...</button></li>
+      </span>
+   </ul>
+   </div>
+
+   <button class="accordion acc-inner">Navigation</button>
+   <div class="panel panel-inner" style="background:rgba(211, 155, 50, 0.274)">
+      <ul class="interface-list">
+      <li><button id="systemsNavigation" class="interface-btn">Destinations</button></li>
+      <hr>
+      <span id="playerNavigationHotbar">
+         <li><button class="interface-btn">Setup&nbsp;Favorite&nbsp;...</button></li>
+      </span>
+   </ul>
+   </div>
+
+   <ul class="interface-list">
+   <li><button id="systemsDocking" class="interface-btn">Dock</button></li>
+   <li><button id="systemsUpgrade" class="interface-btn">Upgrade</button></li>
+   </ul>
+   </div>
+
+
+   <button class="accordion">
+   <img id="navbarBase" alt="Bse" class="navbar-img"/>
+   <span class="navbar-text">Base</span>
+   </button>
+   <div class="panel" style="background:rgba(82, 83, 167, 0.384)">
+   <button class="accordion acc-inner">Construct</button>
+   <div class="panel panel-inner" style="background:rgba(93, 94, 185, 0.384)">
+   <ul class="interface-list">
+   <li><button id="buildPlacement" class="interface-btn">Placements</button></li>
+   <li><button id="buildFacility" class="interface-btn">Facility</button></li>
+   <li><button id="buildInfrastructure" class="interface-btn">Infrastructures</button></li>
+   </ul>
+   </div>
+
+   <button class="accordion acc-inner">Armory</button>
+   <div class="panel panel-inner" style="background:rgba(82, 83, 167, 0.384)">
+   <ul class="interface-list">
+   <li><button id="armoryBuild" class="interface-btn" >Build</button></li>
+   <li><button id="armoryEquip" class="interface-btn" >Equip</button></li>
+   <li><button id="armoryDrydock" class="interface-btn" >Drydock</button></li>
+   </ul>
+   </div>
+
+   <button class="accordion acc-inner">Operations</button>
+   <div class="panel panel-inner" style="background:rgba(82, 83, 167, 0.384)">
+   <ul class="interface-list">
+   <li><button id="opsResearch" class="interface-btn" title="Research & Development">Research</button></li>
+   <li><button id="opsResources" class="interface-btn" title="Resource Management">Resources</button></li>
+   <li><button id="opsTrade" class="interface-btn" title="Freight & Supplies">Trade</button></li>
+   <li><button id="opsProduction" class="interface-btn" title="Ore Producton & Manufacturing">Production</button></li>
+   </ul>
+   </div>
+
+   <ul class="interface-list">
+   <li><button id="baseOptions" class="interface-btn">Options</button></li>
+   </ul>
+   </div>
+
+
+   <button class="accordion">
+   <img id="navbarFleet" alt="Ama" class="navbar-img"/>
+   <span class="navbar-text">Fleet</span>
+   </button>
+   <div class="panel" style="background:rgba(116, 43, 43, 0.712)">
+   <ul class="interface-list">
+   <li><button id="fleetWings" class="interface-btn">Wings</button></li>
+   <li><button id="fleetOptions" class="interface-btn">Options</button></li>
+   </ul>
+   </div>
+   </div>      
+</div>
+<div class="main-grid">
+   <canvas id="ctx" class="game-ctx" width="500px" height="500px">
+      Your browser does not support the HTML5 canvas tag.
+   </canvas>
+</div>
+<div class="right-grid">
+   <div id="playerLogs" class="navbar rad-scroll">
+   <div class="tiny-guide">
+   <img id="rightTreeControlExpand" class="tiny-control">
+   <img id="rightTreeControlCollapes" class="tiny-control">
+   <img id="rightJumpControlDown" class="tiny-control">
+   <img id="rightJumpControlUp" class="tiny-control">
+   <span class="float-right">
+   <img id="rightMinimize" class="tiny-control">
+   <img id="rightPinControl" class="tiny-control">
+   </span>
+   </div>
+   <button id="storyBoardButton" class="accordion">
+   <img id="navbarIntro" alt="Ito" class="navbar-img"/>
+   <span class="navbar-text">Story</span>
+   </button>
+   <div id="storyBoardPanel" class="panel">
+<div id="storyPhase0">
+   <p>You are the captain of a starship.  You have descovered an uninhabited and inhospitable planet deep in space.
+   </p>
+</div>
+<div id="storyPhase1" class="storyBoard-plot">
+   <h4>Chapter 1 : Save up</h4>
+   <p>Scout above the planet and find minerals to build up your capital.  Destroy asteroids and collect the dust.</p>
+</div>  
+<div id="storyPhase2" class="storyBoard-plot">
+   <h4>Chapter 2 : Establish your base </h4>
+   <!--Player setups Spacestation Module-->
+   <p>Build your spacestation.  Explore planet and exploite planet.  Sell off goods and manufacture more.</p>
+</div>
+<div id="storyPhase3" class="storyBoard-plot">
+   <h4>Chapter 3 : Secure supply route</h4>
+   <!--Player setups trade route-->
+   <p>With traffic coming and going this has becomes a target for bandets and any other unlawfuls.  Expand your influence and pinpoint the opponents base of operations. Setup more ships now, what to do with the old ones...</p>
+</div>  
+<div id="storyPhase4" class="storyBoard-plot">
+   <h4>Chapter 4 : Go on the Offensive</h4>
+   <p>Travel to and attach the opponent.</p>
+</div>  
+<div id="storyPhase5" class="storyBoard-plot">
+   <h4>Chapter 5 : The Great Beyond</h4>
+   <p>Sandbox mode now, maybe go over other planets, mabye generate stronger enemies.</p>
+</div>  
+
+   </div>
+   <button id="missionBoardButton" class="accordion">
+      <img id="navbarObjectives" alt="Dev" class="navbar-img"/>
+      <span class="navbar-text">Mission Log</span>
+      </button>
+   <div id="missionBoardPanel" class="panel">
+      <div id="missionLogs"></div>
+      <!--Placeholder for mission logs-->
+   </div>
+
+   <button class="accordion">
+   <img id="navbarNotes" alt="Dev" class="navbar-img"/>
+   <span class="navbar-text">Notes</span>
+   </button>
+   <div class="panel">
+
+   <p><b>Attachments</b>&nbsp;- Inserts on a ship for weapons or other tools. E.g. cannon, tractor beam or mining drill.
+   </p>
+   <p><b>Targeting&nbsp;function</b>&nbsp;- useful for player for auto fire and useful for the AI to determine closest opponent.
+   </p>
+   <p><b>Auto&nbsp;Fire&nbsp;function&nbsp;</b>&nbsp;- a properity on a weapon that allows it to shot by itself. Auto fire is only interested if a player is using it.
+   </p>
+   <hr>
+   <h3>Mining&nbsp;Industry</h3>
+   A very expensive endeavor right now.
+   <p>
+      <ul class="notes-list">
+         <li><b>Drilling</b>&nbsp;-&nbsp;Destroy the asteriod to collect the rocks, metals and ice inside.</li>
+         <li><b>Size</b>&nbsp;-&nbsp;Small as a meter up (1km, 7.8 x 10^12) to proto-planets the size of countries (230km, 2.5 x 10^19kg).</li>
+         <li><b>Yield</b>&nbsp;-&nbsp;Average Earth mining: 0.0002% vs Average Space mining: 0.01% for useful metals</li>
+         <li><b>Materials</b>&nbsp;-&nbsp;Water, Iron, Platimun.</li>
+         <li><b>Places</b>&nbsp;-&nbsp;to find asteroids:
+            <ul class="notes-list">
+               <li><b>Astroid&nbsp;Belt</b>&nbsp;-&nbsp;Between Inner and Outter planets.</li>
+               <li><b>Kuiper&nbsp;Belt</b>&nbsp;-&nbsp;Outside the Outter planets .</li>
+               <li><b>Trojans</b>&nbsp;-&nbsp;L-points in Outter planets</li>
+               <li><b>Other</b>&nbsp;-&nbsp;Scatter anywhere</li>
+               <li><b>Oort&nbsp;Cloud</b>&nbsp;-&nbsp;Outside the Solar System</li>
+            </ul>
+
+         </li>
+      </ul>
+   </p>
+   <hr>
+   <p>
+      <h3>Escalating&nbsp;Enemy</h3>
+      End of game sand-box modes.
+      <ul class="notes-list">
+         <li><b>Asteriod&nbsp;Bombarbment</b>&nbsp;-&nbsp; Natural waves come at you and they get harder. Enemy is throwing them at you and are getting better at it.</li>
+         <li><b>Armada</b>&nbsp;-&nbsp;Enemy waves come at you and they get harder. Zerg idea, slowly grow, fast attackers, always sending bigger waves and growing</li>
+         <li><b>Black&nbsp;Hole&nbsp;Bomb</b>&nbsp;-&nbsp;Two ingredients: 1. A fast spinning Blackhole, 2. Mirrors. Surround the Blackhole in mirrors. A controlled solar powerplant or can exploding as big as a supernova.</li>
+      </ul>
+   </p>
+   </div>
+
+   <button class="accordion">
+   <img id="navbarSettings" alt="Set" class="navbar-img"/>
+   <span class="navbar-text">Game Settings</span>
+   </button>
+   <div class="panel" style="background:wheat">
+   <ul class="interface-list">
+   <li><div class="float-right"><button id="newWindow" class="interface-btn">Debug&nbsp;Window</button>&nbsp;&nbsp;</div></li>  
+   <li>&nbsp;</li>
+   </ul>
+   <button class="accordion acc-inner">Interface</button>   
+   <div class="panel panel-inner" style="background:sandybrown">
+   <ul class="interface-list">
+   <li><input id="settingShowFrames" type="checkbox"/><label for="settingShowFrames">Frames&nbsp;Per&nbsp;Second</label></li>
+   <li><input id="settingDrawBox" type="checkbox"/><label for="settingDrawBox">Draw&nbsp;Hitboxes</label></li>
+   <li><input id="settingRightclick" type="checkbox"/><label for="settingRightclick">Right-Click&nbsp;Enabled</label></li>
+   <li><input id="settingHighlight" type="checkbox"/><label for="settingHighlight">Hightlight&nbsp;Enabled</label></li>
+   <li><button id="settingControls" type="button" class="interface-btn">Control Settings</button></li>
+   </ul>
+   </div>
+   <button class="accordion acc-inner">Speed</button>
+   <div class="panel panel-inner" style="background:royalblue">
+   <ul class="interface-list">
+   <li><input id="speedCraw" type="radio" name="rate" /><label for="speedCraw">Craw</label></li>
+   <li><input id="speedSlow" type="radio" name="rate" /><label for="speedSlow">Slow</label></li>
+   <li><input id="speedNorm" type="radio" name="rate" checked=checked/><label for="speedNorm">Normal</label></li>
+   <li><input id="speedFast" type="radio" name="rate" /><label for="speedFast">Fast</label></li>
+   <li><input id="speedTubo" type="radio" name="rate" /><label for="speedTubo">Turbo</label></li>
+   </ul>
+   </div>
+   <button class="accordion acc-inner">Cheats</button>
+   <div class="panel panel-inner" style="background:darkkhaki">
+   <ul class="interface-list">
+   <li><input id="cheatInvincible" type="checkbox"/><label for="cheatInvincible">God&nbsp;Mode</label></li>
+   <li><button id="cheatCashBonus" type="button" class="interface-btn">Credit&nbsp;Rush</button></li>
+   <hr>
+   <li><button id="cheatTestPhase" type="button" class="interface-btn">Test&nbsp;Phase</button></li>
+   <hr>
+   <li><button id="cheatNextPhase" type="button" class="interface-btn">Next&nbsp;Phase</button></li>
+   </ul>
+   </div>
+   <br>
+   </div>
+   </div>
+</div>
+<div class="bottom-grid">
+   <div class="print-out rad-scroll">
+   <div class="log-title">Game&nbsp;History</div>
+   <div id="logConsole">
+   </div>
+   </div>
+   <div class="log-buttons">
+   <button id="logClear">Clear</button>&nbsp;
+   <button id="logCopy">Copy</button>&nbsp;|&nbsp;
+   <button id="rightMaximize">Show Log</button>&nbsp;
+   <button id="leftMaximize">Show Com</button>
+   </div>
+</div>
+<div class="footer-grid">
+   <!--footer-->
+</div>
+
+</div>
+</div>
+<!--MODAL BOX -->
+<div id="playerModal" class="modal-box">
+
+   
+<!-- Modal content -->
+<div class="modal-padding">
+   <div class="modal-border">
+      <span id="closeModal" class="modal-close" title="Cancel">&times;</span>
+      <div class="modal-title">
+         <h3 id="modalDisplayTitle">The Title</h3>
+         <h5 id="modalSubTitle"></h5>
+      </div>
+      <hr>
+      <div id="modalBody" class="modal-content rad-scroll">
+         
+         <!--middle container-->
+      </div>
+      <hr>
+      <div id="modalFooter" class="modal-footer">
+         <!--bottom container-->
+      </div>
+
+   </div>
+</div>
+</div>
+</div>
+
+<script src="js/graphics.js"></script>
+<script src="js/entities.js"></script>
+<script src="js/modules.js"></script>
+<script src="js/commands.js"></script>
+<script src="js/formatting.js"></script>
+<script src="js/design.js"></script>
+<script src="js/interface.js"></script>
+
+<script src="js/modal/_modal.js"></script>
+<script src="js/modal/builds.js"></script>
+<script src="js/modal/attachment.js"></script>
+
+<script src="js/inventory.js"></script>
+<script src="js/_game.js"></script>
+<script src="js/controls.js"></script>
+</body>
+</html>
+
+

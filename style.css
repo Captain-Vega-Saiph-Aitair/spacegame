@@ -1,0 +1,489 @@
+/*BASELINE DEFAULTS*/
+:root {  /* common font */
+   font-family: Arial, Helvetica, sans-serif;
+   font-size:14px;
+}
+hr {
+   width:90%;
+   margin: 5px auto;
+}
+button {
+   width: 90px;
+   white-space: nowrap;
+   overflow: hidden;
+}
+/*MAIN PAGE*/
+body {
+   color: black;
+   background-color: white;
+}
+.user-select {
+   user-select: none; /*sets everything to disable, preventing selection with the mouse on left click hold down*/
+}
+.center-margin {
+   margin: auto;
+   position: relative;
+   width: 944px;
+   border: 1px solid black;
+}
+.game-ctx {
+   border: 1px solid #000000;
+   background: black;
+}
+.header-printout {
+   font-size: 30px;
+   background:chartreuse;
+   text-decoration: underline;
+}
+.log-title {
+   margin: 0.2em 0 0.4em;
+   font-weight: 700;
+}
+#logConsole {
+   padding: 0.5em;
+   border: 1px solid #000000;
+   min-height: 1em;
+}
+.print-out {
+   overflow: auto;
+   height: 80px;
+   padding: 2px;
+}
+.log-buttons {
+   padding: 10px 40px;
+   direction: rtl;
+}
+/*LEFT AND RIGHT NAVIGATION BARS*/
+.navbar {
+/*position:fixed;*/
+   width: 4rem;
+   max-height: 100%;
+   transition: width 200ms ease;
+   overflow-x: auto;
+   overflow-x: hidden;
+}
+.flipped{
+   direction: rtl; /*move scrollbar to left hand side*/
+}
+.rad-scroll::-webkit-scrollbar {
+   width: 0.25rem;
+}
+.rad-scroll::-webkit-scrollbar-track {
+   background: #1e1e24;
+}
+.rad-scroll::-webkit-scrollbar-thumb {
+   background: #6649b8;
+}
+.navbar:hover {
+   width: 100%;
+}
+.navbar-pinned { /*pin in function*/
+   width: 100%;
+}
+.navbar-text {
+   display: none;
+}
+.navbar-img {
+   width: 1.6rem; 
+   height: 1.6rem;
+}
+.tiny-guide {
+   display: none;
+   margin: 0;
+   padding: 2px 0 3px;
+   height: 1rem;
+   background: orange;
+   position: sticky;
+   top: 0;
+   overflow: hidden;
+   direction: ltr;
+   z-index: 5;
+}
+.navbar:hover > .tiny-guide{
+   display: block;
+}
+.tiny-control {
+   width: 1rem;
+   height: 1rem;
+   padding: 0 0px;
+   margin: 0 0px;
+   border: 1px solid red; 
+}
+.tiny-control:hover {
+   background: magenta;
+   border: 1px solid darkred; 
+}
+.navbar-minimize {
+   display:none;
+}
+/* DROP DOWN BUTTON */
+.accordion {  
+   background-color: #eee;
+   color: #444;
+   cursor: pointer;
+   padding: 9px 18px;
+   width: 100%;
+   border: none;
+   border-bottom: 2px solid black;
+   text-align: left;
+   outline: none;
+   font-size: 15px;
+   direction: ltr;
+}
+.smooth-transition, .accordion {
+   transition: 0.4s;
+}
+.acc-inner {  
+   padding: 9px;
+}
+.accordion:hover .navbar-text {
+   display: inline;
+}
+/* drop down buttons controls */
+.active, .accordion:hover, .interface-btn:hover {
+   background-color: #ccc;
+   border-bottom: 1px solid black;
+   height: calc(100% + 1px);
+}
+/* drop down buttons inner panel */
+.panel {
+   display: none;
+   padding: 0 2px 0 2px;
+   /*background-color: white;
+   max-height: 0;*/
+   overflow: hidden;
+   transition: max-height 0.2s ease-out;
+   border: 1px solid black;
+   background: snow;
+   position:relative;
+}
+/* LEFT NAVIGATION BAR */
+.interface {
+   top: 0;
+   background: gray; /* older browsers */
+   background: rgba(128,128,128,0.7); /* newer browsers */
+}
+/* drop down buttons list */
+.interface-list {
+   list-style-type: none; /* no bullitons */
+   padding: 2px;
+   margin: 0;
+}
+/* drop down buttons list items */
+.interface-list li {
+   padding: 2px;
+   white-space: nowrap;
+   overflow: hidden;
+}
+/* drop down option buttons */
+.interface-btn {
+   width: 100%;
+   border: none;
+   text-align: left;
+   outline: none;
+   border: none;
+   cursor: pointer;
+   direction: ltr;
+   text-overflow: ellipsis;
+}
+.float-right {
+   position: absolute;
+   right: 0;
+}
+/*IMPROVED TOOLTIP*/
+.tooltip {
+   position: relative;
+   display: inline-block;
+   width: 100%;
+}
+.tooltiptext {
+   display: none;
+   width: 120px;
+   background-color: black;
+   color: #fff;
+   text-align: center;
+   border-radius: 6px;
+   padding: 5px 0;
+   /* Position the tooltip */
+   position: absolute;
+   z-index: 30;
+   top: -5px;
+   left: 105%;
+}
+.tooltip:hover ~ .tooltiptext {
+   display: block;
+}
+/*RIGHT NAVIGATION BAR*/
+.right-bar {
+   top: 0;
+   right: 0;
+   float: right;
+   background: gray; /* older browsers */
+   background: rgba(128,128,128,0.7); /* newer browsers */
+}
+.mission-log-entry {
+   display: block;
+   margin: 4px 0 2px;
+   border: 2px solid red;
+   background: lightcoral;
+   text-indent: 0.5em;
+   overflow:hidden;
+   position:relative;
+   min-height: 20px;
+}
+.mission-log-entry:hover {
+   filter: brightness(120%);
+}
+.mission-completed {
+   border-color: green;
+   background: limegreen
+}
+.mission-tiny-close {
+   top: 0;
+}
+.objective-name {
+   padding: 8px 0 2px;
+   margin: 1px;
+   font-weight: bold;
+}
+.objective-body {
+   padding: 2px;
+   margin: 1px;
+}
+.notes-list {
+   padding-left: 12px; 
+}
+/*MODAL BOX*/
+.modal-box {
+   display: none; /* Hidden by default */
+   position: fixed; /* Stay in place */
+   z-index: 99; /* Sit on top */
+   left: 0;
+   top: 0;
+   padding:25px;
+   width: 100%; /* Full width */
+   height: 100%; /* Full height */
+   overflow: hidden; /* Enable scroll if needed */
+   background-color: rgb(0,0,0);
+   background-color: rgba(0,0,0,0.4);
+}
+.modal-border {
+   margin: 8px;
+   border: 1px solid #888;
+   background:rgb(224, 222, 192); /*darkkhaki*/
+}
+.modal-padding {
+   background-color: #fefefe;
+   margin: 100px auto; /* 100 from the top and centered */
+   padding: 20px;
+   width: 500px; /* Could be more or less, depending on screen size */
+}
+/* modal content box */
+.modal-content {
+      padding: 30px;
+      min-height: 100px;
+      max-height: 25vh;
+      overflow: auto;
+}
+.modal-title {
+   padding: 6px;
+}
+.modal-footer {
+   padding-top: 14px;
+   padding-bottom: 6px;
+   text-align: right;
+}
+/* close Button */
+.modal-close {
+   color: #aaa;
+   float: right;
+   font-size: 28px;
+   font-weight: bold;
+   width: 2rem;
+   height: 2rem;
+}
+.modal-close:hover, .modal-close:focus {
+   color: black;
+   text-decoration: none;
+   cursor: pointer;
+}
+.modal-btn-close {
+   background-color: brown;
+   font-weight: 800;
+}
+.modal-btn-confirm {
+   background-color: #aaa;
+   font-weight: 800;
+}
+.modal-btn-command {
+   background-color: green;
+   font-weight: 800;
+}
+.modal-btn-div {
+   padding: 6px;
+}
+.modal-sel {
+   width: 150px;
+}
+.mod-nav {
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   left: 0;
+   top: 0;
+   z-index: 1;
+   background-color: rgb(0,0,0);
+   background-color: rgba(0,0,0,0.4);
+}
+.mod-nav-confirm {
+   background: green;
+   width: 120px;
+   height: 90px;
+   position: absolute;
+   margin: auto;
+   left: 50%;
+   top: 20%;
+   z-index: 3;
+}
+.mod-nav-cancel {
+   background: orangered;
+   width: 110px;
+   height: 80px;
+   position: absolute;
+   left: 50%;
+   top: 60%;
+   z-index: 2;
+}
+/* BODY STRUCTURE */
+.body-container {
+   display:grid;
+   grid-gap:1px;
+   grid-template-areas:
+   'header header header'
+   'left main right'
+   'left bottom right'
+   'footer footer footer';
+   grid-template-columns:220px 502px 220px;
+   grid-template-rows:32px 500px 120px 15px;
+   position:relative;
+   margin:auto;
+}
+.header-grid {
+   text-align:center;
+   grid-area:header;
+   background:darksalmon
+}
+.left-grid {
+   grid-area:left;
+   background:darkred;
+   overflow:hidden;
+}
+.center-grid {
+   grid-area:main;
+   background:deeppink;
+}
+.right-grid {
+   grid-area:right;
+   background:maroon;
+   overflow:hidden;
+}
+.bottom-grid {
+   grid-area:bottom;
+   background:goldenrod;
+}
+.footer-grid {
+   grid-area:footer;
+   background:indianred;
+   overflow: hidden;
+}
+.two-grid-container {
+   display: grid;
+   align-content: space-evenly;
+   justify-content: space-evenly;
+   grid-template-columns: 50% 50%;
+   align-content: center;
+}
+.grid-item {
+   background-color: snow; /*burlywood; /*cornsilk; /*gainsboro; /*ivory; /*paleturquoise; /*rgba(255, 255, 255, 0.8);*/
+   border: 1px solid rgba(0, 0, 0, 0.8);
+   padding: 16px 8px;
+   text-align: left;
+   position: relative;
+   /*top: 50%; align center vertically*/
+}
+.three-grid-container  {
+   display: grid;
+   align-content: space-evenly;
+   justify-content: space-evenly;
+   grid-template-columns: 33.3% 33.3% 33.3%;
+   grid-gap: 0;
+   align-content: center;
+}
+/*INDIVIDUAL MODAL BOXES*/
+.carco-grid-item {
+   padding: 2px 2px;
+   text-align: left;
+   position: relative;
+}
+.btn-img-carco {
+   width: 12px;
+   height: 12px;
+   padding: 3px 3px 0;
+   text-overflow: ellipsis;
+}
+.btn-favorite {
+   background: green;
+   opacity: 0.5;
+}
+.fave-empty {
+   background-color: rgb(209, 172, 172);
+}
+.validation-failed {
+   background: darkred;
+   border: 2px solid red;
+}
+.validation-caution {
+   background:khaki;
+   border: 2px solid yellow;
+}
+@media only screen and (max-width: 955px) {
+   .body-container {
+      display:grid;
+      grid-gap:1px;
+      grid-template-areas:
+      'header header'
+      'main main'
+      'bottom bottom'
+      'left right'
+      'footer footer';
+      grid-template-columns:250px 250px;
+      grid-template-rows:32px 500px 140px 200px 15px;
+      position:relative;
+      margin:auto;
+   }  
+   .center-margin {
+      margin: auto;
+      position: relative;
+      width: 502px;
+      border: 1px solid black;
+   }
+   .tiny-guide {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+   }
+   .navbar {
+      width: 100%;
+   }
+ }
+
+ /*unorganized*/
+ .flashing-button {
+      animation: blinker 1s linear infinite;
+   }
+   
+   @keyframes blinker {
+      50% {
+         opacity: 10%;
+      }
+   }

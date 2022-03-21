@@ -1,0 +1,649 @@
+CSS:
+   Custom scroll bar - rad-scroll
+
+
+Steps to make the game an independent Project:
+1. Copy latest chapter to new file. Name file "Spacegame"
+2. Copy primary resources file into Spacegame.
+3. Delete (extra data to trim off):
+   2.a folder Spacegame/resources/_source 
+   2.b image Spacegame/resources/map.png 
+4. Update Spacegame/graphics.js > filePath = "../resources/" 
+      to 
+   filePath = "resources/"
+5. Good to go. Run by opening Spacegame/play.html
+
+/**want to change the above so that no correction to location is required, there are now static images pre-loaded in the header */
+
+***************************************************************************************************************************************
+26-Jun-2021
+Replace Upgrade object with Pickup.
+Added dust to the game with Natural object for natural features.
+
+***************************************************************************************************************************************
+30-Jun-2021
+added to css
+   :root {
+      user-select:none; /*sets everything to disable, preventing selection with the mouse on left click hold down*/
+   }
+Moving HP and Credits outside of the canvas.
+
+Removed below from formatting.js.  It has been build into the html page and css.
+//display player stats in canvas across the top
+printStatBar = function() {
+   ctx.save(); //store canvas settings
+   //background
+   ctx.fillStyle = "white";
+   ctx.fillRect(0,0,WIDTH,40);
+   //text
+   ctx.fillStyle = "black";
+   //print 'HP' and 'Credits' in canvas
+   ctx.fillText(player.hp + "Hp",0,30); //position x:0 and y:30
+   ctx.fillText("Credits " + player.credits,200,30); //position x:200 and y:30
+   ctx.restore(); //reset canvas settings
+} //end of printStatBar function
+
+ended on the below. Need to setup independing functions for each button to toggle their respected navbar
+<button id="rightMaximize">Show Log</button>
+<button id="leftMaximize">Show Com</button>
+
+***************************************************************************************************************************************
+4-Jul-2021
+Watched and added notes from chapters 24 and 25, collisions. Omitted from my project for now.
+The actors are in space, there is lots of room to go around
+
+**************************************************************************************************************************************
+14-Jul-2021
+Chapter 26.1 Player HtmlJavascript Interface
+Change the Modal box to three basic types:
+   -Options
+      Box with rows. Rows made of two containers, left and right.  Left will be the label, right is the value.
+      Design system to build rows based on the number of objects returned when the Modal is called.
+      Pass objects that are the rows - Data = {label:x,value:y}, 
+   -Lists
+      Box with three columns.  Items that fill the list populate the box starting in the top left, moving right, and next line once row is filled.
+   -Page
+      Box with optional image and paragraph.  Possibley Yes/No/Cancel/OK/Continue options
+New Javascript page Modal for building and desconstrcuting the Modal box
+
+started using housekeeping prefex for global variables, for example: gol_objControllerModal for global object ControllerModal, declared in global scope in interface.js
+
+To Do: forget how to destroy variable.  Wanted for modal.js
+   Modalbox.closeModal = function() {
+      gol_divPlayerModal.style.display = "none";
+      gol_objControllerModal; //forget how to destroy variable 
+   }
+
+**************************************************************************************************************************************
+14-Jul-2021
+Working on Modal setup.  Renamed js/module/attachments.js -> attachment.js.  removed s in attachment[s]
+
+**************************************************************************************************************************************
+22-Jul-2021
+
+RegExp - Regular expressions can make your search much more powerful. 
+
+Hex  ASCII Characters  is what is used in the title attribute.
+
+https://donsnotes.com/tech/charsets/ascii.html
+
+{empty:false,}; //set empty object
+
+Finished revamping inventory and weapons so that each weapons is now an item and they have stats that have their descriptions in game build based on those stats and the modules construct their entites from the corrosponding item.
+
+**************************************************************************************************************************************
+29-Jul-2021
+Finally did 1/2 of Chapter 25. Completed update so that vessles do a key press.
+
+Need to find out how to determine these presses for the DEFAULT pattern
+
+**************************************************************************************************************************************
+31-Jul-2021
+Armada renamed to Fleet. Used Armada for enemy mode.
+
+**************************************************************************************************************************************
+03-Jul-2021
+Successful in adding:
+@media only screen and (max-width: 955px)
+//This takes effect if the screen size is resized smaller than 956px
+
+**************************************************************************************************************************************
+03-Jul-2021
+   parsec (pc)
+   = 3.26 light-years (ly), or 
+   = 206,000 astronomical units (au), or
+   = 30.9 trillion kilometres (3.086e+16km) (19.2 trillion miles)
+
+   1.3au = 0.000005pc
+
+**************************************************************************************************************************************
+07-Aug-2021
+Add location propertiy to entites, hold the id of the location.  Have the entity show up only on the loaded location
+
+Cropped international spacestation. This is a trading hub. 
+-add array of known locations
+-deside control to determin when a place is to far for the player to travel to.
+
+**************************************************************************************************************************************
+07-Aug-2021
+move all non-unique modal code to new file, js/builds.js
+
+remove below:
+Modalbox.clearCarcoHold = function () {
+   gol_objModalBody.innerHTML = ""; //destroy current content
+}
+from js/attachments.js
+
+and added:
+Modalbox.clearBody = function () {
+   gol_objModalBody.innerHTML = ""; //destroy current content
+}
+on to _modal.js
+
+I think I have location awareness setup on Entites object. It seems that the game will 'pause' everything on another map. Want them to continue without the player.
+
+**************************************************************************************************************************************
+03-Sep-2021
+
+Correcting game so that it conforms more with the Object Orientent Programming way.
+
+Also using housekeeping rules.
+working on following variables for compliance --------
+
+started _game.js:
+New global variable for the game object: 
+   gol_objGameInterval
+
+global variables ->   //MOVED TO clsGame - 
+
+   frameCount -> intFrameCount
+   framesLastSecond
+   frameCurrentSecond
+   PlayerReady
+
+**************************************************************************************************************************************
+07-Sep-2021
+gol_objSpaceGame
+
+   playerReady -> bolPlayerReady
+      gol_objSpaceGame.getGamePaused()
+      gol_objSpaceGame.setGamePaused(boolean)
+   currentLevel -> intCurrentLevel
+      //was not able to find currentLevel used anywhere, this variable may be redundant 
+   currentMap - > objCurrentMap
+      gol_objSpaceGame.getCurrentMap()
+      gol_objSpaceGame.setCurrentMap(object)
+   logMessage -> strLogMessage
+      gol_objSpaceGame.getLogMessage()
+      gol_objSpaceGame.addLogMessage(string)
+      gol_objSpaceGame.clearLogMessage()
+   drawHitbox -> bolDrawHitbox
+      gol_objSpaceGame.getDrawHitbox()
+      gol_objSpaceGame.setDrawHitbox(boolean)
+   rightclickEnable -> bolRightclickEnable
+      gol_objSpaceGame.getRightclickEnable()
+      gol_objSpaceGame.setRightclickEnable(boolean)
+   printFrames -> bolPrintFrames
+      gol_objSpaceGame.getPrintFrames()
+      gol_objSpaceGame.setPrintFrames(boolean)
+
+clsGame finished, got the game to start ;) .
+
+_game.js is done.
+
+Went to chapter one and error was thrown.
+
+**************************************************************************************************************************************
+09-Sep-2021
+gol_objSpaceGame
+
+//MOVED TO clsStructures - 
+
+   Structures -> clsStructures
+   libraryBlueprints -> Structures.library
+   nameshortstrNameShort
+   nameLong -> strNameLong
+   price -> intPrice
+
+**************************************************************************************************************************************
+18-Sep-2021
+Backup files onto Game Computer. External Harddrive does not work anylonger.
+
+graphics.js is done.
+Working on entities.js:
+
+//MOVED TO clsGame - 
+
+   idCount -> intCount
+      gol_objSpaceGame.getNextId()
+      gol_objSpaceGame.resetNextId()
+
+entities.js not done, but stopping for now.
+Working on design.js:
+gol_objSpaceGame
+
+//MOVED TO clsGamePhase - 
+
+   currentPhase -> gol_objGamePhase
+      gol_objGamePhase.updateFrameCount()
+      gol_objGamePhase.resetFrameCount()
+      gol_objGamePhase.spawnElements()
+      gol_objGamePhase.endPhase()
+      gol_objGamePhase.getPrintChapter()
+   startMap -> objStartingMap
+   spawns -> arr_objSpawns
+
+   Working on the game phase, it is intertwined with the runLevel function. Do not want to run this function before the game starts...
+
+**************************************************************************************************************************************
+19-Sep-2021
+Doing the big file now, entites.js
+
+//MOVED TO clsEntity - 
+
+   id -> intId
+      getId()
+   type -> enmType
+   location - idLocation
+   x -> intX
+   y -> intY
+   positionX -> intPositionX
+   positionY -> intPositionY
+   rotate - > intRotate
+   translateX - intTranslateX
+   translateY - intTranslateY
+
+**************************************************************************************************************************************
+20-Sep-2021
+did not get to finish the following changes:
+
+//MOVED TO clsEntity - 
+
+   width -> intWidth //started
+   height -> intHeight
+   img -> objImg
+   imgMode - > emmImgMode
+   spriteAnimCounter -> intSpriteAnimCounter
+
+**************************************************************************************************************************************
+16-Oct-2021
+
+//MOVED TO clsEntity - 
+
+   img -> objImg
+   imgMode - > emmImgMode
+   spriteAnimCounter -> intSpriteAnimCounter
+
+   player.x -> player.getXPosition()
+   player.y -> player.getYPosition()
+   player.type -> player.getFightingSide()
+   player.location -> player.getLocation()
+
+//MOVED TO clsActor - 
+
+   hp -> intHp
+      getHp()
+      setHp()
+      changeHp()
+   hpMax -> intHpMap
+      getMaxHp()
+      setMaxHp()
+      changeMaxHp()
+   atkSpd -> intAtkSpd
+      getAtkSpd()
+      setAtkSpd(_integer)
+      changeAtkSpd(_integer)
+   aimAngle -> intAimAngle
+      getAimAngle()
+      setAimAngle()
+   inventory -> objInventory
+   attachments -> objAttachments
+   targetLock -> objTargetLock
+   lockedOnMe -> arr_objLockedOnMe
+   pressingDown -> bolPressingDown
+      pressedDown()
+      releaseDown()
+      getKeyDown()
+   pressingUp -> bolPressingUp
+      pressedUp()
+      releaseUp()
+      getKeyUp()
+   pressingLeft -> bolPressingLeft
+      pressedLeft()
+      releaseLeft()
+      getKeyLeft()
+   pressingRight -> bolPressingRight
+      pressedRight()
+      releaseRight()
+      getKeyRight()
+
+   maxMoveSpd -> intMaxMoveSpd
+
+**************************************************************************************************************************************
+31-Oct-2021
+
+Change map, player dissapears.
+
+//MOVED TO clsEntity - 
+
+   setLocation()
+
+//MOVED TO clsPlayer - 
+
+   Player -> clsPlayer
+   credits -> intCredits
+      getCredits()
+      decreaseCredits()
+
+   player -> gol_objPlayer
+   //player object has been updated but not the class
+
+**************************************************************************************************************************************
+04-Nov-2021
+
+   super_update -> funSuperUpdate
+
+//MOVED TO clsPlayer - 
+
+   Player -> clsPlayer
+   score -> intScore
+      getScore()
+   inventoryFavorites -> arr_idInventoryFavorites
+      getInventoryFavorites()
+      resetInventoryFavorites()
+      addInventoryFavorite(_keyId)
+         //inherance issue, relative to the player, but handled by the actor class
+      funReturnAttachments(_dataObject) //MOVED TO clsActor - 
+   attachmentsSelectPopulate -> funAttachmentsSelectPopulate
+
+**************************************************************************************************************************************
+07-Nov-2021
+
+//MOVED TO clsPlayer - 
+
+   navigation -> objNavigation
+      addNewLocation(_keyId)
+   navigationFavorites -> arr_keyIdNavFavorites
+      addNewFavoriteLocation(_keyId)
+      getFavoriteLocation()
+   funEquipAttachment(_equipSlot,_assignedAttachment)
+
+//MOVED TO Module - 
+
+      getItemId()
+
+//MOVED TO clsNavigation - 
+
+
+**************************************************************************************************************************************
+11-Nov-2021
+
+//MOVED TO clsNavigation - 
+   self.refreshRender //keep
+   
+
+//MOVED TO clsPlayer - 
+   arr_idNavigationFavorites
+      getNavigationFavorites()
+   self.refreshGUI() //call navigation and inventory refresh renders for now
+   dockableInRange -> arr_idDockableInRange
+      self.clearDockable()
+
+   pressingMouseLeft //pressing, keep as a unique value, to repersent key presses
+
+//MOVED TO clsVessel - 
+Vessel -> clsVessel
+   pattern -> enmPattern
+   spdX -> intSpeedX
+   spdY -> intSpeedY
+   drops -> arrDrops
+   axisX - > intAxisX
+   axisY -> intAxisY
+   dockable -> arr_objDockable
+   toRemove -> bolToRemove
+      getRemoving();
+
+//MOVED TO clsNatural - 
+Natural -> clsNatural
+   width -> intWidth
+   height -> intHeight
+   img -> objImg
+   size -> intSize
+   
+//MOVED TO clsPickup - 
+Pickup -> clsPickup
+   category -> enmCategory
+   dissipate -> intDissipate
+
+//MOVED TO clsInventory - 
+Inventory -> clsInventory
+   items -> arr_objItems
+
+//MOVED TO clsItem - 
+Item -> clsItem
+
+**************************************************************************************************************************************
+14-Nov-2021
+
+
+//MOVED TO interface.js - 
+objCanvas -> gol_objCanvas
+ctx -> gol_objContext
+
+//MOVED TO clsPlayer - gol_objPlayer
+   kills -> intKills
+      increaseKillCount()
+      getKillCount()
+   invincible -> bolInvincible
+      getInvincible()
+      setInvincible(_boolean)
+   gol_travelDestination -> idTravelDestination
+      getTravelDestination()
+      setTravelDestination(_id)
+
+//MOVED TO clsObjective - 
+   Objective ->clsObjective
+   id -> strId
+      getId()
+   title -> strTitle
+      getTitle()
+   description -> strDescription
+      getDescription()
+   achieved -> bolAchieved
+      getAchieved()
+
+//MOVED TO clsMap - 
+   Maps -> clsMap
+   image -> objImg
+   width -> intWidth
+      getWidth()
+   height -> intHeight
+      getHeight()
+   
+   mapDrawX:0,
+      mapDrawY:0,
+      drawModWidth:_map.drawModWidth,
+      drawModHeight:_map.drawModHeight,
+
+   mapDrawX -> intDrawX
+      self.getMapDrawX()
+   mapDrawY -> intDrawY
+      self.getMapDrawY()
+
+**************************************************************************************************************************************
+
+//MOVED TO clsMap - need to update to methods // 
+   objCurrentMap.getWidth()
+   objCurrentMap.getHeight()
+
+//first ever global function
+
+   gol_funMotion() //one place to test if the thing crossed the map barrier
+
+**************************************************************************************************************************************
+24-Dec-2021
+
+update interface to keep side bars pinned
+
+
+//MOVED TO clsLocation - 
+Locations -> clsLocation
+   name -> strName
+      getName()
+
+interfaceNavigation -> funInterfaceNavigation
+returnNavigation -> funReturnNavigation
+
+transition -> funTransition
+
+clsMap
+   draw() - drawBackground()
+Module -> clsModule
+   id -> intId
+   moduleType -> enmModuleType
+
+Weapon -> clsWeapon
+   id -> intId
+   weaponType -> enmWeaponType
+   cooldown -> intCooldown
+   cooldownCooling -> intCooldownCooling
+   damage -> intDamage
+      getDamage()
+   mode -> enmMode
+   location -> idLocation
+      getLocation()
+   x -> intX
+   y -> intY
+   combatType -> enmCombatType
+      getCombatType()
+
+clsInventory
+   getInventory()
+
+**************************************************************************************************************************************
+28-Dec-2021
+
+//MOVED TO clsBullet - 
+Bullet -> clsBullet
+   damage -> intDamage
+   timer -> intTimer
+   overrides -> arr_objOverrides
+
+Finished Object Orientent 
+
+**************************************************************************************************************************************
+29-Dec-2021
+
+add to clsPlayer:
+   self.bolLockDown = false;
+   self.bolLockUp = false;
+   self.bolLockLeft = false;
+   self.bolLockRight = false;
+
+   self.lockBottomBorder()
+   self.lockTopBorder()
+   self.lockLeftBorder()
+   self.lockRightBorder()
+   self.getBottomBorderLock()
+   self.getTopBorderLock()
+   self.getLeftBorderLock()
+   self.getRightBorderLock()
+   
+This will control when the player touches the border, will need to change all draw when these are locked.
+
+**************************************************************************************************************************************
+03-Jan-2022
+
+Got map locking in place. Rearranged controls.js and entites.js to allow the player to move and now point normally.
+
+want to break clsEntities.draw method into two methods. This is to the benefit of the different classes having their own unique ways to animate
+
+clsEntities
+   intRotate //changed from zero to negative one
+   NEW_() -> calcDraw() //code to calculate the movement of the entity
+   draw() -> draw() //now to only put to the canvas
+
+clsActor
+   draw() -> calcDraw()
+
+
+Player image was not working properly. Code would load before image would. Solution added by including the below. ref="preload" is a Google chrome only tag.
+<!--attempt to load graphics first-->
+<link rel="preload" href="../resources/player.png" as="image">
+
+Improved HP box placement on vessels by using the position on the map to determin where to draw it.
+
+**************************************************************************************************************************************
+08-Jan-2022
+
+clsActor
+   dropTarget
+
+arr_objLockedOnMe //holds all other actors currently targing self
+
+working on line 1030
+clsActor
+   occuredLock() //update arr_objLockedOnMe array
+
+bolToRemove //need to check if true, if so, do no set as a valid target to lock
+//Locking and unlocking now working, had to add a check to skip over anything needing to be removed.
+
+clsPlayer
+   getGameLaunch() //control moving the player to chapter one
+   setGameLaunch() //set to true, only thing done
+   self.getEquiped(_slot) // return object in that slot, 1 (default), 2 or 3
+      self.equip1 -> self.objEquip1
+      self.equip2 -> self.objEquip2
+      self.equip3 -> self.objEquip3
+   //missed doing Object Conforanity on Modalbox.attachmentsConfirm
+
+adminNextPhase -> funAdminNextPhase //on interface.js
+
+//Attachments where added to inventory, but no longer.  Could not solve problem of duplicating items.  So attachments are no longer added to inventory. 
+//Idea: Inventory weapons, when used, could be added to attachments.  Another place to control 
+**************************************************************************************************************************************
+23-Jan-2022
+
+update intro so that the player movement is slowed
+clsPlayer
+   self.intMaxMoveSpdIntro = 4; //intro movie speed 
+   self.intMaxMoveSpdDefault = 10; //game play speed
+   self.intMaxMoveSpd = self.intMaxMoveSpdDefault; //movement rate
+
+Defensive -> clsDefensive
+
+setting up drill
+graphics.js
+   Img.drill = new Image();
+   Img.drill.src = filePath + "drill.gif";
+
+HTML allows gif to be loaded as images, but I need more control
+clsModule
+   self.draw() //add class to all Module objects, but only utilize for the drill
+**************************************************************************************************************************************
+
+//Part of clsPlayer. not sure what these are going to be, at the moment they are empty placeholders for possibly ids or objects
+   self.armor = "";
+   self.deflector = "";
+   self.shields = "";
+
+   self.SLS = "";
+   self.FTL = "";
+   self.engins = "";
+
+   self.alpha = "";
+   self.beta = "";
+   self.backups = "";
+   
+
+**************************************************************************************************************************************
+
+Acknowledgements:
+
+Credit goes to:
+
+Donald (Donnie) MacRury
+W3School
+Youtube: How to make a HTML 5 Game, producer
+
+https://fontawesome.com/license
